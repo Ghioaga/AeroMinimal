@@ -1,0 +1,19 @@
+This was made by u/Ghioaga from Reddit by taking a dll from ControlCenter app and folowing the instructions from
+https://github.com/microsoft/Windows-driver-samples/tree/master/wmi/wmiacpi#installation
+
+AeroCtl is made by wtwrp from GitLab and for updates look on
+https://gitlab.com/wtwrp/aeroctl/-/releases
+
+Current version is 0.2.3 (Date:13.09.2021)
+
+If your Laptop model is not in the list, get your acpimof.dll from Windows/SysWOW64 while CC is installed and save it.
+Uninstall CC. Copy the dll in the install folder of AeroMinimal and run the Setup.bat. After a restart it should work.
+If you want you can contact me over on Reddit so I can add your laptop model to the Setup.
+
+For any problems you encounter please get in touch with me on Reddit.
+This is my first try at an installer and I made it mostly for myself.
+
+Thank you!
+
+Everything should install in ProgramFiles(x86)
+And the batch file should give no errors. Godspeed.
