@@ -31,24 +31,64 @@ WizardStyle=modern
 
 [Types]
 Name: "15XC"; Description: "Aero 15XC";
-Name: "17XC"; Description: "Aero 17XC";
-Name: "15v8"; Description: "Aero 15v8";
+Name: "17KC"; Description: "Aero 17KC";
+Name: "15Xv8"; Description: "Aero 15Xv8";
 
 [Components]
-Name: "aeroctl"; Description: "AeroCtl"; Types:15XC 17XC 15v8;Flags: fixed
+Name: "aeroctl"; Description: "AeroCtl"; Types:15XC 17KC 15Xv8;Flags: fixed
 Name: "XC15"; Description: "dll for Aero 15XC"; Types: 15XC
-Name: "XC16"; Description: "dll for Aero 17XC"; Types: 17XC
-Name: "v815"; Description: "dll for Aero 15v8"; Types: 15v8
+Name: "KC17"; Description: "dll for Aero 17KC"; Types: 17KC
+Name: "Xv815"; Description: "dll for Aero 15Xv8"; Types: 15Xv8
  
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
-[Files]
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\AeroCtl\{#MyAppExeName}"; DestDir: "{app}\AeroCtl"; Flags: ignoreversion; Components: aeroctl 
+
+[Files] 
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\15XC\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: XC15
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\15Xv8\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: Xv815
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\Setup.bat"; DestDir: "{app}"; Flags: ignoreversion; Components: aeroctl
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\AeroCtl\*"; DestDir: "{app}\AeroCtl"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: aeroctl
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7z.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "{tmp}\AeroCtl.7z"; DestDir: "{tmp}"; Flags: external deleteafterinstall;
+
+[Code]
+var
+  DownloadPage: TDownloadWizardPage;
+function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
+begin
+  if Progress = ProgressMax then
+    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
+  Result := True;
+end;
+procedure InitializeWizard;
+begin
+  DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
+end;
+function NextButtonClick(CurPageID: Integer): Boolean;
+begin
+  if CurPageID = wpReady then begin
+    DownloadPage.Clear;
+    if WizardIsComponentSelected('Xv815') 
+    then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/f75ee06a82de8a0c96c951192e781bd2/AeroCtl.7z', 'AeroCtl.7z', '')
+    else DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/cb4de3c8c23589b58670ac0fe40ee8af/AeroCtl.7z', 'AeroCtl.7z', '');
+    DownloadPage.Show;
+    try
+      try
+        DownloadPage.Download; // This downloads the files to {tmp}
+        Result := True;
+      except
+        if DownloadPage.AbortedByUser then
+          Log('Aborted by user.')
+        else
+          SuppressibleMsgBox(AddPeriod(GetExceptionMessage), mbCriticalError, MB_OK, IDOK);
+        Result := False;
+      end;
+    finally
+      DownloadPage.Hide;
+    end;
+  end else
+    Result := True;
+end;
 
 [Registry]
 Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services\WmiAcpi"; ValueType: string; ValueName: "MofImagePath"; ValueData: "%windir%\system32\acpimof.dll"
@@ -58,3 +98,5 @@ Root: HKLM; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: 
 Name: "{autoprograms}\{#MyAppName}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"
 Name: "{autodesktop}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"; Tasks: desktopicon
 
+[Run]
+Filename: {tmp}\7z.exe; Parameters: "x ""{tmp}\AeroCtl.7z"" -o""{app}\AeroCtl";
