@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AeroMinimal"
-#define MyAppVersion "1.0.0.0"
+#define MyAppVersion "1.0.0.3"
 #define MyAppPublisher "u/Ghioaga"
 #define MyAppURL "https://www.reddit.com/user/Ghioaga"
 #define MyAppExeName "AeroCtl.UI.exe"
@@ -13,7 +13,6 @@
 AppId={{1F2B28DA-03E5-4349-A584-3AFDE6577F67}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -21,8 +20,6 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\Licence.txt
-; Uncomment the following line to run in non administrative install mode (install for current user only.)
-;PrivilegesRequired=lowest
 OutputDir=C:\Users\ghioa\Desktop\Projects\AeroMinimal\Setup
 OutputBaseFilename=AeroMinimal
 Compression=lzma
@@ -30,24 +27,27 @@ SolidCompression=yes
 WizardStyle=modern
 
 [Types]
-Name: "15XC"; Description: "Aero 15XC";
-Name: "17KC"; Description: "Aero 17KC";
-Name: "15Xv8"; Description: "Aero 15Xv8";
+;Name: "15XC"; Description: "Aero 15XC";
+;Name: "17KC"; Description: "Aero 17KC";
+;Name: "15Xv8"; Description: "Aero 15Xv8";
+
+Name: "CC"; Description: "ControlCenter";
+Name: "SM"; Description: "SmartManager";
 
 [Components]
-Name: "aeroctl"; Description: "AeroCtl"; Types:15XC 17KC 15Xv8;Flags: fixed
-Name: "XC15"; Description: "dll for Aero 15XC"; Types: 15XC
-Name: "KC17"; Description: "dll for Aero 17KC"; Types: 17KC
-Name: "Xv815"; Description: "dll for Aero 15Xv8"; Types: 15Xv8
+Name: "aeroctl"; Description: "AeroCtl"; Types:CC SM;Flags: fixed
+Name: "CC"; Description: "dll for Laptops Running CC"; Types: CC
+Name: "SM"; Description: "dll for Laptops Running SM"; Types: SM
+;Name: "Xv815"; Description: "AeroCtl 0.1.4"; Types: 15Xv8
  
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 
 [Files] 
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\15XC\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: XC15
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\15Xv8\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: Xv815
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\Setup.bat"; DestDir: "{app}"; Flags: ignoreversion; Components: aeroctl
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: SM;
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: CC;
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\Setup.bat"; DestDir: "{app}"; Flags: ignoreversion; Components: aeroctl;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7z.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "{tmp}\AeroCtl.7z"; DestDir: "{tmp}"; Flags: external deleteafterinstall;
 
@@ -68,7 +68,7 @@ function NextButtonClick(CurPageID: Integer): Boolean;
 begin
   if CurPageID = wpReady then begin
     DownloadPage.Clear;
-    if WizardIsComponentSelected('Xv815') 
+    if WizardIsComponentSelected('SM') 
     then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/f75ee06a82de8a0c96c951192e781bd2/AeroCtl.7z', 'AeroCtl.7z', '')
     else DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/cb4de3c8c23589b58670ac0fe40ee8af/AeroCtl.7z', 'AeroCtl.7z', '');
     DownloadPage.Show;
@@ -99,4 +99,4 @@ Name: "{autoprograms}\{#MyAppName}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExe
 Name: "{autodesktop}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: {tmp}\7z.exe; Parameters: "x ""{tmp}\AeroCtl.7z"" -o""{app}\AeroCtl";
+Filename: {tmp}\7z.exe; Parameters: "x ""{tmp}\AeroCtl.7z"" -o""{app}\AeroCtl"" -y";
