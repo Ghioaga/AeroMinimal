@@ -48,7 +48,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: SM;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: CC;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\Setup.bat"; DestDir: "{app}"; Flags: ignoreversion; Components: aeroctl;
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7z.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7za.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7zxa.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "{tmp}\AeroCtl.7z"; DestDir: "{tmp}"; Flags: external deleteafterinstall;
 
 [Code]
@@ -99,4 +101,4 @@ Name: "{autoprograms}\{#MyAppName}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExe
 Name: "{autodesktop}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: {tmp}\7z.exe; Parameters: "x ""{tmp}\AeroCtl.7z"" -o""{app}\AeroCtl"" -y";
+Filename: {tmp}\7za.exe; Parameters: "x ""{tmp}\AeroCtl.7z"" -o""{app}\AeroCtl"" -y";
