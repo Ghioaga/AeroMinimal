@@ -16,6 +16,6 @@ To Do List:
 - Take all feedback into consideratino regardign different models and their needs.
 
 Update 19/09/2021:
-AeroCtl latest is 0.2.4 but in my experience Aero15XC it's not starting so i postpone the AeroMinimal Update.
+AeroCtl latest is 0.2.4 but in my experience Aero15XC is not starting so i postpone the AeroMinimal Update.
 
 Thank you.
