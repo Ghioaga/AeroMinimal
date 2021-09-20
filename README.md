@@ -11,6 +11,7 @@ All help is welcomed as this is my first project and i'm learning everything fro
 
 To Do List:
 - Add Gigabyte Fusion as a component for the keyboard.
+- Add Color Profiles from the CC and SM install files.
 - Update all the time with the latest AeroCtl.
 - Take all feedback into consideratino regardign different models and their needs.
 
