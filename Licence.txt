@@ -4,7 +4,7 @@ https://www.reddit.com/user/Ghioaga
 The Setup was made by taking the dll files from the ControlCenter setup and SmartManager setup and using the instructions from below:
 https://github.com/microsoft/Windows-driver-samples/tree/master/wmi/wmiacpi#installation
 
-AeroCtl is made by wtwrp from GitLab and for updates look on
+AeroCtl is made by wtwrp from GitLab:
 https://gitlab.com/wtwrp/aeroctl/-/releases
 
 For updates look on the project github:
