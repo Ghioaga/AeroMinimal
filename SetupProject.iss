@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AeroMinimal"
-#define MyAppVersion "1.0.0.3"
+#define MyAppVersion "1.0.0.5"
 #define MyAppPublisher "u/Ghioaga"
 #define MyAppURL "https://www.reddit.com/user/Ghioaga"
 #define MyAppExeName "AeroCtl.UI.exe"
@@ -32,26 +32,27 @@ Name: "SM"; Description: "SmartManager";
 Name: "CSM"; Description: "Custom"; Flags: iscustom;
 
 [Components]
-Name: "aeroctl"; Description: "Latest AeroCtl"; Types:CC SM;
-Name: "aeroctl_014"; Description: "AeroCtl version 0.1.4 best for Aero 15 Xv8";
-Name: "aeroctl_023"; Description: "AeroCtl version 0.2.3 best for Aero 15 XC";
-Name: "CC"; Description: "dll for Laptops Running CC"; Types: CC
-Name: "SM"; Description: "dll for Laptops Running SM"; Types: SM
-Name: "Fusion"; Description: "Gygabite Fusion Standalone for KeyboardRGB";
+Name: "aeroctl"; Description: "AeroCtl App";
+Name: "aeroctl\latest"; Description: "Latest AeroCtl"; Types:CC SM; Flags: exclusive;
+Name: "aeroctl\aeroctl_014"; Description: "AeroCtl version 0.1.4 best for Aero 15 Xv8"; Flags: exclusive;
+Name: "aeroctl\aeroctl_023"; Description: "AeroCtl version 0.2.3 best for Aero 15 XC"; Flags: exclusive;
+Name: "Dll"; Description: "dll taken from CC or SM";
+Name: "Dll\CC"; Description: "dll for Laptops Running CC"; Types: CC; Flags: exclusive;
+Name: "Dll\SM"; Description: "dll for Laptops Running SM"; Types: SM; Flags: exclusive;
+Name: "Fusion"; Description: "Gigabyte Fusion Standalone for KeyboardRGB";
  
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 
 [Files] 
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: SM; 
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: CC;
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\Setup.bat"; DestDir: "{app}"; Flags: ignoreversion; Components: aeroctl;
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: Dll\SM; 
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: Dll\CC;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\GigabyteFusion.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: Fusion;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7za.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7zxa.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
-Source: "{tmp}\AeroCtl.7z"; DestDir: "{tmp}"; Flags: external deleteafterinstall;
+Source: "{tmp}\AeroCtl.7z"; DestDir: "{tmp}"; Flags: external deleteafterinstall; Components: aeroctl\aeroctl_014 aeroctl\latest aeroctl\aeroctl_023;
 
 [Code]
 var
@@ -70,9 +71,9 @@ function NextButtonClick(CurPageID: Integer): Boolean;
 begin
   if CurPageID = wpReady then begin
     DownloadPage.Clear;
-    if WizardIsComponentSelected('aeroctl_014') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/f75ee06a82de8a0c96c951192e781bd2/AeroCtl.7z', 'AeroCtl.7z', '');
-    if WizardIsComponentSelected('aeroctl_023') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/cb4de3c8c23589b58670ac0fe40ee8af/AeroCtl.7z', 'AeroCtl.7z', '');
-    if WizardIsComponentSelected('aeroctl') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/a92276867086ad03746620628a696b04/AeroCtl.7z', 'AeroCtl.7z', '');
+    if WizardIsComponentSelected('aeroctl\aeroctl_014') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/f75ee06a82de8a0c96c951192e781bd2/AeroCtl.7z', 'AeroCtl.7z', '');
+    if WizardIsComponentSelected('aeroctl\aeroctl_023') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/cb4de3c8c23589b58670ac0fe40ee8af/AeroCtl.7z', 'AeroCtl.7z', '');
+    if WizardIsComponentSelected('aeroctl\latest') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/a92276867086ad03746620628a696b04/AeroCtl.7z', 'AeroCtl.7z', '');
     DownloadPage.Show;
     try
       try
