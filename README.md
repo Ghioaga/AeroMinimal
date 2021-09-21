@@ -1,6 +1,6 @@
 # AeroMinimal
 
-AeroCtl Latest in Install: 0.2.3
+AeroCtl Latest in Install: 0.2.4
 
 This is a Install file for AeroCtl and the dll that it needs to work.
 The dll is taken from SysWOW64 after it's made by CC.
@@ -10,12 +10,8 @@ If your laptop is not yet in the Install get in touch with me and use Setup.bat 
 All help is welcomed as this is my first project and i'm learning everything from the code to github.
 
 To Do List:
-- Add Gigabyte Fusion as a component for the keyboard.
 - Add Color Profiles from the CC and SM install files.
 - Update all the time with the latest AeroCtl.
 - Take all feedback into consideratino regardign different models and their needs.
-
-Update 19/09/2021:
-AeroCtl latest is 0.2.4 but in my experience Aero15XC is not starting so i postpone the AeroMinimal Update.
 
 Thank you.
