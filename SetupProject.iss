@@ -27,27 +27,27 @@ SolidCompression=yes
 WizardStyle=modern
 
 [Types]
-;Name: "15XC"; Description: "Aero 15XC";
-;Name: "17KC"; Description: "Aero 17KC";
-;Name: "15Xv8"; Description: "Aero 15Xv8";
-
 Name: "CC"; Description: "ControlCenter";
 Name: "SM"; Description: "SmartManager";
+Name: "CSM"; Description: "Custom"; Flags: iscustom;
 
 [Components]
-Name: "aeroctl"; Description: "AeroCtl"; Types:CC SM;Flags: fixed
+Name: "aeroctl"; Description: "Latest AeroCtl"; Types:CC SM;
+Name: "aeroctl_014"; Description: "AeroCtl version 0.1.4 best for Aero 15 Xv8";
+Name: "aeroctl_023"; Description: "AeroCtl version 0.2.3 best for Aero 15 XC";
 Name: "CC"; Description: "dll for Laptops Running CC"; Types: CC
 Name: "SM"; Description: "dll for Laptops Running SM"; Types: SM
-;Name: "Xv815"; Description: "AeroCtl 0.1.4"; Types: 15Xv8
+Name: "Fusion"; Description: "Gygabite Fusion Standalone for KeyboardRGB";
  
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 
 [Files] 
-Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: SM;
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: SM; 
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "{sys}"; Flags: ignoreversion; Components: CC;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\Setup.bat"; DestDir: "{app}"; Flags: ignoreversion; Components: aeroctl;
+Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\GigabyteFusion.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: Fusion;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7za.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "C:\Users\ghioa\Desktop\Projects\AeroMinimal\Files\7zxa.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
@@ -70,9 +70,9 @@ function NextButtonClick(CurPageID: Integer): Boolean;
 begin
   if CurPageID = wpReady then begin
     DownloadPage.Clear;
-    if WizardIsComponentSelected('SM') 
-    then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/f75ee06a82de8a0c96c951192e781bd2/AeroCtl.7z', 'AeroCtl.7z', '')
-    else DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/cb4de3c8c23589b58670ac0fe40ee8af/AeroCtl.7z', 'AeroCtl.7z', '');
+    if WizardIsComponentSelected('aeroctl_014') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/f75ee06a82de8a0c96c951192e781bd2/AeroCtl.7z', 'AeroCtl.7z', '');
+    if WizardIsComponentSelected('aeroctl_023') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/cb4de3c8c23589b58670ac0fe40ee8af/AeroCtl.7z', 'AeroCtl.7z', '');
+    if WizardIsComponentSelected('aeroctl') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/a92276867086ad03746620628a696b04/AeroCtl.7z', 'AeroCtl.7z', '');
     DownloadPage.Show;
     try
       try
@@ -102,3 +102,4 @@ Name: "{autodesktop}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"; Tasks:
 
 [Run]
 Filename: {tmp}\7za.exe; Parameters: "x ""{tmp}\AeroCtl.7z"" -o""{app}\AeroCtl"" -y";
+Filename: {app}\GigabyteFusion.exe; Components: Fusion;
