@@ -3,9 +3,11 @@
 AeroCtl Latest in Install: 0.2.5
 
 This is a Install file for AeroCtl and the dll that it needs to work.
+
 The dlls are taken from the CC or SM install files.
 
 Tested on Windows 11 and 10.
+
 Tested on Aero 15XC and Aero 15W8.
 
 If something doesn't work get in touch with me on Reddit.
