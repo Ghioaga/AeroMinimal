@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AeroMinimal"
-#define MyAppVersion "1.0.0.6"
+#define MyAppVersion "1.0.0.7"
 #define MyAppPublisher "u/Ghioaga"
 #define MyAppURL "https://www.reddit.com/user/Ghioaga"
 #define MyAppExeName "AeroCtl.UI.exe"
@@ -25,6 +25,7 @@ OutputBaseFilename=AeroMinimal
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+AlwaysRestart=true
 
 [Types]
 Name: "CC"; Description: "ControlCenter";
@@ -45,8 +46,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 
 [Files] 
-Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "%windir%\system32"; Flags: ignoreversion; Components: Dll\SM; 
-Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "%windir%\system32"; Flags: ignoreversion; Components: Dll\CC;
+Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Components: Dll\SM; 
+Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Components: Dll\CC;
+Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "{win}\SysWOW64"; Flags: ignoreversion; Components: Dll\SM; 
+Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "{win}\SysWOW64"; Flags: ignoreversion; Components: Dll\CC;
 Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\GigabyteFusion.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: Fusion;
 Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\7za.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
