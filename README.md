@@ -1,6 +1,6 @@
 # AeroMinimal
 
-AeroCtl Latest in Install: 0.2.4
+AeroCtl Latest in Install: 0.2.5
 
 This is a Install file for AeroCtl and the dll that it needs to work.
 The dll is taken from SysWOW64 after it's made by CC.
@@ -12,6 +12,6 @@ All help is welcomed as this is my first project and i'm learning everything fro
 To Do List:
 - Add Color Profiles from the CC and SM install files.
 - Update all the time with the latest AeroCtl.
-- Take all feedback into consideratino regardign different models and their needs.
+- Take all feedback into consideration regarding different models and their needs.
 
 Thank you.
