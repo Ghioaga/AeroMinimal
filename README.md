@@ -3,11 +3,13 @@
 AeroCtl Latest in Install: 0.2.5
 
 This is a Install file for AeroCtl and the dll that it needs to work.
-The dll is taken from SysWOW64 after it's made by CC.
-I recently found out that for each Laptop model it's a different dll so i'll add the dlls i encounter as a choice during install.
-If your laptop is not yet in the Install get in touch with me and use Setup.bat in the Install Folder to get it in system32.
+The dlls are taken from the CC or SM install files.
 
-All help is welcomed as this is my first project and i'm learning everything from the code to github.
+Tested on Windows 11 and 10.
+Tested on Aero 15XC and Aero 15W8.
+
+If something doesn't work get in touch with me on Reddit.
+https://www.reddit.com/user/Ghioaga
 
 To Do List:
 - Add Color Profiles from the CC and SM install files.
