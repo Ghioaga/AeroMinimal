@@ -13,6 +13,8 @@ Tested on Aero 15XC and Aero 15W8.
 If something doesn't work get in touch with me on Reddit.
 https://www.reddit.com/user/Ghioaga
 
+Or I'm also on Discord as Ghioaga#7431 .
+
 To Do List:
 - Add Color Profiles from the CC and SM install files.
 - Update all the time with the latest AeroCtl.
