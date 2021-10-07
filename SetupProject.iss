@@ -96,6 +96,9 @@ begin
 end;
 
 [Registry]
+Root: HKLM; Subkey: "SYSTEM\ControlSet001";
+Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services";
+Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services\WmiAcpi";
 Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services\WmiAcpi"; ValueType: string; ValueName: "MofImagePath"; ValueData: "%windir%\system32\acpimof.dll"
 Root: HKLM; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "AeroCtl"; ValueData: "{app}\AeroCtl\AeroCtl.UI.exe"
 
