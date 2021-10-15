@@ -1,6 +1,6 @@
 # AeroMinimal
 
-AeroCtl Latest in Install: 0.2.5
+AeroCtl Latest in Install: 0.3.0
 
 This is a Install file for AeroCtl and the dll that it needs to work.
 
