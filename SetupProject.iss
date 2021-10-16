@@ -75,7 +75,7 @@ begin
   if CurPageID = wpReady then begin
     DownloadPage.Clear;
     if WizardIsComponentSelected('aeroctl\aeroctl_014') then DownloadPage.Add('https://gitlab.com/wtwrp/aeroctl/uploads/f75ee06a82de8a0c96c951192e781bd2/AeroCtl.7z', 'AeroCtl.7z', '');
-    if WizardIsComponentSelected('aeroctl\latest') then DownloadPage.Add('http://f.0x.re/aeroctl/0.3.0/AeroCtl.UI.exe', 'AeroCtl.UI.exe', '');
+    if WizardIsComponentSelected('aeroctl\latest') then DownloadPage.Add('https://f.0x.re/aeroctl/0.3.0/AeroCtl.UI.exe', 'AeroCtl.UI.exe', '');
     DownloadPage.Show;
     try
       try
