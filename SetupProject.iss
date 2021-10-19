@@ -100,7 +100,7 @@ Root: HKLM; Subkey: "SYSTEM\ControlSet001";
 Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services";
 Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services\WmiAcpi";
 Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services\WmiAcpi"; ValueType: string; ValueName: "MofImagePath"; ValueData: "%windir%\system32\acpimof.dll"
-Root: HKLM; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "AeroCtl"; ValueData: "{app}\AeroCtl\AeroCtl.UI.exe"
+//Root: HKLM; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "AeroCtl"; ValueData: "{app}\AeroCtl\AeroCtl.UI.exe"
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"
@@ -109,3 +109,4 @@ Name: "{autodesktop}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"; Tasks:
 [Run]
 Filename: {tmp}\7za.exe; Parameters: "x ""{tmp}\AeroCtl.7z"" -o""{app}\AeroCtl"" -y";
 Filename: {app}\GigabyteFusion.exe; Components: Fusion;
+Filename: "schtasks"; Parameters: "/Create /F /SC ONLOGON /TN ""AeroCtl"" /TR ""{app}\AeroCtl\AeroCtl.UI.exe"" /RL HIGHEST"; Flags: runhidden
