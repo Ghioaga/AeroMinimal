@@ -51,21 +51,71 @@ Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "{wi
 Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\SM\acpimof.dll"; DestDir: "{win}\SysWOW64"; Flags: ignoreversion; Components: Dll\SM; 
 Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\CC\acpimof.dll"; DestDir: "{win}\SysWOW64"; Flags: ignoreversion; Components: Dll\CC;
 Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\GigabyteFusion.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: Fusion;
-Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
-Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\7za.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
-Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\7zxa.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall; Components: aeroctl\aeroctl_014;
+Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\7za.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall; Components: aeroctl\aeroctl_014;
+Source: "C:\Users\ghioa\Desktop\AeroMinimal\Files\7zxa.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall; Components: aeroctl\aeroctl_014;
 Source: "{tmp}\AeroCtl.7z"; DestDir: "{tmp}"; Flags: external deleteafterinstall; Components: aeroctl\aeroctl_014;
 Source: "{tmp}\AeroCtl.UI.exe"; DestDir: "{app}\AeroCtl"; Flags: external; Components: aeroctl\latest;
 
 [Code]
+
 var
   DownloadPage: TDownloadWizardPage;
+  TaskXml: string;
+
+procedure CreateTaskXml;
+begin
+  TaskXml :=
+    '<?xml version="1.0"?>' + #13#10 +
+    '<Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">' + #13#10 +
+
+    '<Triggers>' + #13#10 +
+      '<LogonTrigger>' + #13#10 +
+        '<Enabled>true</Enabled>' + #13#10 +
+      '</LogonTrigger>' + #13#10 +
+    '</Triggers>' + #13#10 +
+
+    '<Principals>' + #13#10 +
+    '<Principal id="Author">' + #13#10 +
+      '<RunLevel>HighestAvailable</RunLevel>' + #13#10 +
+    '</Principal>' + #13#10 +
+    '</Principals>' + #13#10 +
+
+
+    '<Settings>' + #13#10 +
+      '<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>' + #13#10 +
+      '<StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>' + #13#10 +
+      '<AllowHardTerminate>true</AllowHardTerminate>' + #13#10 +
+      '<StartWhenAvailable>true</StartWhenAvailable>' + #13#10 +
+      '<RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>' + #13#10 +
+      '<AllowStartOnDemand>true</AllowStartOnDemand>' + #13#10 +
+      '<Enabled>true</Enabled>' + #13#10 +
+      '<Hidden>false</Hidden>' + #13#10 +
+      '<RunOnlyIfIdle>false</RunOnlyIfIdle>' + #13#10 +
+      '<WakeToRun>false</WakeToRun>' + #13#10 +
+      '<ExecutionTimeLimit>PT0S</ExecutionTimeLimit>' + #13#10 +
+      '<Priority>7</Priority>' + #13#10 +
+  '</Settings>' + #13#10 +
+
+  '<Actions Context="Author">' + #13#10 +
+  '<Exec>' + #13#10 +
+  '<Command>' + ExpandConstant('{app}\AeroCtl\AeroCtl.UI.exe') + '</Command>' + #13#10 +
+  '</Exec>' + #13#10 +
+  '</Actions>' + #13#10 +
+  '</Task>' + #13#10;
+
+  SaveStringToFile(ExpandConstant('{tmp}\Task.xml'), TaskXml, true);
+
+end;
+
 function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
+
 begin
   if Progress = ProgressMax then
     Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
   Result := True;
 end;
+
 procedure InitializeWizard;
 begin
   DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
@@ -100,13 +150,13 @@ Root: HKLM; Subkey: "SYSTEM\ControlSet001";
 Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services";
 Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services\WmiAcpi";
 Root: HKLM; Subkey: "SYSTEM\ControlSet001\Services\WmiAcpi"; ValueType: string; ValueName: "MofImagePath"; ValueData: "%windir%\system32\acpimof.dll"
-//Root: HKLM; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "AeroCtl"; ValueData: "{app}\AeroCtl\AeroCtl.UI.exe"
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"
 Name: "{autodesktop}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{autodesktop}\AeroCtl"; Filename: "{app}\AeroCtl\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: {tmp}\7za.exe; Parameters: "x ""{tmp}\AeroCtl.7z"" -o""{app}\AeroCtl"" -y";
+Filename: {tmp}\7za.exe; Parameters: "x ""{tmp}\AeroCtl.7z"" -o""{app}\AeroCtl"" -y"; Components: aeroctl\aeroctl_014;
 Filename: {app}\GigabyteFusion.exe; Components: Fusion;
-Filename: "schtasks"; Parameters: "/Create /F /SC ONLOGON /TN ""AeroCtl"" /TR ""{app}\AeroCtl\AeroCtl.UI.exe"" /RL HIGHEST"; Flags: runhidden
+Filename: "schtasks"; Parameters: "/Create /F /TN ""AeroCtl"" /XML ""{tmp}\Task.xml"; Flags: runhidden; BeforeInstall: CreateTaskXml;
