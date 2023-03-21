@@ -52,8 +52,9 @@ IF %ERRORLEVEL%==2 Goto End
 
 :Step3
 
-SchTasks /Create /XML %~dp0Startup.xml /tn AeroCtl
+SchTasks /Create /XML "%~dp0Startup.xml" /tn AeroCtl
 
+pause
 :End
 
 cls
