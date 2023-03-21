@@ -54,7 +54,6 @@ IF %ERRORLEVEL%==2 Goto End
 
 SchTasks /Create /XML "%~dp0Startup.xml" /tn AeroCtl
 
-pause
 :End
 
 cls
